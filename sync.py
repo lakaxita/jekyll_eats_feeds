@@ -121,7 +121,7 @@ class Repository(object):
         self.repo.git.push('origin', 'master')
 
 
-def sync(feed, repository, directory, posts_dir, metadata):
+def sync(feed, repository, directory, posts_dir, metadata, push=True):
     message = "Latest articles from {}".format(feed)
     repo = Repository(repository, directory, message)
     repo.download()
@@ -131,7 +131,8 @@ def sync(feed, repository, directory, posts_dir, metadata):
     filenames = generator.generate(parser.articles())
     filenames = (os.path.join(posts_dir, f) for f in filenames)
     repo.commit(filenames)
-    repo.upload()
+    if push:
+        repo.upload()
 
 
 if __name__ == '__main__':
@@ -141,4 +142,5 @@ if __name__ == '__main__':
     filepath = sys.argv[1]
     name, ext = os.path.splitext(os.path.basename(filepath))
     conf = imp.load_source(name, filepath)
-    sync(conf.FEED, conf.REPO, conf.OUTPUT, conf.POSTS_DIR, conf.METADATA)
+    sync(conf.FEED, conf.REPO, conf.OUTPUT, conf.POSTS_DIR, conf.METADATA,
+         conf.PUSH)
