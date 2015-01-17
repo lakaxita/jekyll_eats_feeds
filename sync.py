@@ -114,7 +114,8 @@ class Repository(object):
     def commit(self, filenames):
         for filename in filenames:
             self.repo.git.add(filename)
-        self.repo.git.commit(m=self.message)
+        if self.repo.is_dirty():
+            self.repo.git.commit(m=self.message)
 
     def upload(self):
         self.repo.git.push('origin', 'master')
