@@ -136,15 +136,9 @@ def sync(feed, repository, directory, posts_dir, metadata):
 
 if __name__ == '__main__':
     import sys
+    import imp
 
-    OUTPUT = sys.argv[1]
-    FEED = 'http://angulaberria.info/eu/taxonomy/term/1/feed'
-    REPO = 'git@github.com:lakaxita/lakaxita.github.io.git'
-    POSTS_DIR = '_posts'
-    METADATA = {
-        'layout': 'post',
-        'published': True,
-        'categories': 'lakaxita',
-    }
-
-    sync(FEED, REPO, OUTPUT, POSTS_DIR, METADATA)
+    filepath = sys.argv[1]
+    name, ext = os.path.splitext(os.path.basename(filepath))
+    conf = imp.load_source(name, filepath)
+    sync(conf.FEED, conf.REPO, conf.OUTPUT, conf.POSTS_DIR, conf.METADATA)

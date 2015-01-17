@@ -10,7 +10,17 @@ pip install -r requirements.txt
 Settings
 --------
 
-If you are using this you may need to tweak the constants.
+You have to create some config file as follows:
+
+    FEED = 'http://domain.tld/some/path/to/the/rss/feeds'
+    OUTPUT = 'repo_checkout_dir'
+    REPO = 'https://domain.tld/some/git/repo/with/your/jekyll/site.git'
+    POSTS_DIR = '_posts'
+    METADATA = {
+        'inserted': True,
+        'in': 'every',
+        'post': 'metadata header',
+    }
 
 
 Execution
@@ -18,4 +28,4 @@ Execution
 
 Once everything is ready, execute it with:
 
-    python sync.py repo_clone_directory
+    python sync.py config.py
