@@ -91,7 +91,9 @@ class JekyllGenerator(object):
         posts = dict(self.posts())
         for uuid, article in articles:
             if uuid in posts:  # Post already exists
-                yield self.write(uuid, article, posts[uuid])
+                post = posts[uuid]
+                if not post.metadata.get('locked', False):  # Post isn't locked
+                    yield self.write(uuid, article, post)
             else:  # Post has to be created
                 yield self.write(uuid, article)
 
