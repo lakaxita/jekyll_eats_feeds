@@ -111,7 +111,8 @@ class Repository(object):
         except:
             self.repo = Repo.clone_from(self.url, self.directory)
         else:
-            self.repo.remote().pull()
+            self.repo.remote().fetch()
+            self.repo.git.rebase('origin/master')
 
     def commit(self, filenames):
         for filename in filenames:
