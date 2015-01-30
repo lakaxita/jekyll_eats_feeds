@@ -145,5 +145,6 @@ if __name__ == '__main__':
     filepath = sys.argv[1]
     name, ext = os.path.splitext(os.path.basename(filepath))
     conf = imp.load_source(name, filepath)
-    sync(conf.FEED, conf.REPO, conf.OUTPUT, conf.POSTS_DIR, conf.METADATA,
-         conf.PUSH)
+    for feed in conf.FEEDS:
+        sync(feed['url'], feed['repo'], feed['output'], feed['post_dir'],
+             feed['metadata'], feed['push'])
